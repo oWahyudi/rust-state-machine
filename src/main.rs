@@ -1,5 +1,5 @@
 mod balances;
-mod proof_of_existance;
+mod proof_of_existence;
 mod support;
 mod system;
 
@@ -23,7 +23,7 @@ mod types {
 // Note that it is just an accumulation of the calls exposed by each module.
 pub enum RuntimeCall {
 	Balances(balances::Call<Runtime>),
-	ProofOfExistence(proof_of_existance::Call<Runtime>),
+	ProofOfExistence(proof_of_existence::Call<Runtime>),
 }
 
 // This is our main Runtime.
@@ -32,7 +32,7 @@ pub enum RuntimeCall {
 pub struct Runtime {
 	system: system::Pallet<Self>,
 	balances: balances::Pallet<Self>,
-	proof_of_existence: proof_of_existance::Pallet<Self>,
+	proof_of_existence: proof_of_existence::Pallet<Self>,
 }
 
 impl system::Config for Runtime {
@@ -45,7 +45,7 @@ impl balances::Config for Runtime {
 	type Balance = types::Balance;
 }
 
-impl proof_of_existance::Config for Runtime {
+impl proof_of_existence::Config for Runtime {
 	type Content = types::Content;
 }
 
@@ -55,7 +55,7 @@ impl Runtime {
 		Self {
 			system: system::Pallet::new(),
 			balances: balances::Pallet::new(),
-			proof_of_existence: proof_of_existance::Pallet::new(),
+			proof_of_existence: proof_of_existence::Pallet::new(),
 		}
 	}
 
@@ -142,13 +142,13 @@ fn main() {
 		extrinsics: vec![
 			support::Extrinsic {
 				caller: alice.clone(),
-				call: RuntimeCall::ProofOfExistence(proof_of_existance::Call::CreateClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::CreateClaim {
 					claim: &"Hello, world!",
 				}),
 			},
 			support::Extrinsic {
 				caller: bob.clone(),
-				call: RuntimeCall::ProofOfExistence(proof_of_existance::Call::CreateClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::CreateClaim {
 					claim: &"Hello, world!",
 				}),
 			},
@@ -160,13 +160,13 @@ fn main() {
 		extrinsics: vec![
 			support::Extrinsic {
 				caller: alice,
-				call: RuntimeCall::ProofOfExistence(proof_of_existance::Call::RevokeClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::RevokeClaim {
 					claim: &"Hello, world!",
 				}),
 			},
 			support::Extrinsic {
 				caller: bob,
-				call: RuntimeCall::ProofOfExistence(proof_of_existance::Call::CreateClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::CreateClaim {
 					claim: &"Hello, world!",
 				}),
 			},
